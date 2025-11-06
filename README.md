@@ -20,7 +20,7 @@ query = await client.lightweight.query(time.time_ns()) #We use time to generate 
 ```
 
 ## Https API [(docs)](https://satisfactory.wiki.gg/wiki/Dedicated_servers/HTTPS_API)
-This API requires the *session* parameter to be set in the *SatisfactoryServer* constructor to be used \
+This API requires the *session* parameter to be set in the *SatisfactoryServer* constructor \
 It does raise an *ErrorResponse* exeption if the function you try to execute fails
 
 ### Usage:
