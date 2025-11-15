@@ -17,13 +17,21 @@ from .models import (
 )
 
 class ApiEndpoints():
-    def __init__(self, session: aiohttp.ClientSession, url: str, headers: dict[str, str], ssl_context: ssl.SSLContext):
+    def __init__(self, session: aiohttp.ClientSession, url: str, headers: dict[str, str], self_signed_certificate: bool):
         self._session = session
         self._url = url
         self._headers = headers
-        self._ssl_context = ssl_context
+        self._self_signed_certificate = self_signed_certificate
+        self._ssl_context = None
 
     async def _post(self, function: str, data: dict[str, str] = {}) -> aiohttp.ClientResponse:
+
+        if self._ssl_context is None:
+            self._ssl_context = await self._session.loop.run_in_executor(None, ssl.create_default_context)
+            
+            if self._self_signed_certificate:
+                self._ssl_context.check_hostname = False
+                self._ssl_context.verify_mode = ssl.CERT_NONE
 
         return await self._session.post(
             self._url,
