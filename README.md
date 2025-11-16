@@ -11,12 +11,15 @@ No errors are raised but you must check if the query was succesful
 ### Usage:
 ```python
 from aiosatisfactory import SatisfactoryServer
-import time
+import asyncio, time
 
-client = SatisfactoryServer("server.ip")
-query = await client.lightweight.query(time.time_ns()) #We use time to generate a Cookie
-    if query is not None:
-        print(query.response)
+async def main():
+    server = SatisfactoryServer("satis.rikys.dev")
+    query = await server.lightweight.query(time.time_ns())
+    print(query.response.SubStates)
+
+
+asyncio.run(main())
 ```
 
 ## Https API [(docs)](https://satisfactory.wiki.gg/wiki/Dedicated_servers/HTTPS_API)
@@ -25,12 +28,13 @@ It does raise an *ErrorResponse* exeption if the function you try to execute fai
 
 ### Usage:
 ```python
-import asyncio
+import asyncio, aiohttp
 from aiosatisfactory import SatisfactoryServer
+from aiosatisfactory.https.models import ErrorResponse
 
 async def main():
 
-    with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession() as session:
         client = SatisfactoryServer("server.ip", session=session)
         try:
             response = await client.https.api.health_check()
