@@ -55,14 +55,12 @@ class ServerStateResponse:
         return struct.unpack_from(NUM_SUB_STATES_FORMAT, self.raw_response, NUM_SUB_STATES_OFFSET)[0]
 
     @property
-    def SubStates(self) -> list[tuple[int, int]]:
-        sub_states: list[tuple[int, int]] = []
+    def SubStates(self) -> dict[int, int]:
+        sub_states: dict[int, int] = {}
         for i in range(self.NumSubStates):
-            sub_state = (
-                struct.unpack_from(SUB_STATE_ID_FORMAT, self.raw_response, SUB_STATE_ID_OFFSET + i * SUB_STATES_STRUCTURE_SIZE)[0],
-                struct.unpack_from(SUB_STATE_VERSION_FORMAT, self.raw_response, BASE_SUB_STATE_VERSION_OFFSET + i * SUB_STATES_STRUCTURE_SIZE)[0]
-            )
-            sub_states.append(sub_state)
+            id = struct.unpack_from(SUB_STATE_ID_FORMAT, self.raw_response, SUB_STATE_ID_OFFSET + i * SUB_STATES_STRUCTURE_SIZE)[0]
+            value = struct.unpack_from(SUB_STATE_VERSION_FORMAT, self.raw_response, BASE_SUB_STATE_VERSION_OFFSET + i * SUB_STATES_STRUCTURE_SIZE)[0]
+            sub_states[id] = value
         return sub_states
 
     @property
