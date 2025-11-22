@@ -110,20 +110,20 @@ class ApiEndpoints():
         response = await self._post("QueryServerState")
         data = await response.json()
         self._raise_error(response, data)
-        data = data["ServerGameState"]
+        data = data["data"]["serverGameState"]
         return QueryServerStateResponse(
             response.status,
-            data["ActiveSessionName"],
-            data["NumConnectedPlayers"],
-            data["PlayerLimit"],
-            data["TechTier"],
-            data["ActiveSchematic"],
-            data["GamePhase"],
-            data["IsGameRunning"],
-            data["TotalGameDuration"],
-            data["IsGamePaused"],
-            data["AverageTickRate"],
-            data["AutoLoadSessionName"]
+            data["activeSessionName"],
+            data["numConnectedPlayers"],
+            data["playerLimit"],
+            data["techTier"],
+            data["activeSchematic"],
+            data["gamePhase"],
+            data["isGameRunning"],
+            data["totalGameDuration"],
+            data["isGamePaused"],
+            data["averageTickRate"],
+            data["autoLoadSessionName"]
         )
 
 
@@ -132,10 +132,11 @@ class ApiEndpoints():
         response = await self._post("GetServerOptions")
         data = await response.json()
         self._raise_error(response, data)
+        data = data["data"]
         return GetServerOptionsResponse(
             response.status,
-            data["ServerOptions"],
-            data["PendingServerOptions"]
+            data["serverOptions"],
+            data["pendingServerOptions"]
         )
 
 
@@ -144,10 +145,11 @@ class ApiEndpoints():
         response = await self._post("GetAdvancedGameSettings")
         data = await response.json()
         self._raise_error(response, data)
+        data = data["data"]
         return GetAdvancedGameSettingsResponse(
             response.status,
-            data["CreativeModeEnabled"],
-            data["AdvancedGameSettings"]
+            data["creativeModeEnabled"],
+            data["advancedGameSettings"]
             )
 
 
@@ -329,10 +331,11 @@ class ApiEndpoints():
         response = await self._post("EnumerateSessions")
         data = await response.json()
         self._raise_error(response, data)
+        data = data["data"]
         return EnumerateSessionsResponse(
             response.status,
-            data["Sessions"],
-            data["CurrentSessionIndex"]
+            data["sessions"],
+            data["currentSessionIndex"]
         )
 
 
