@@ -88,7 +88,7 @@ class ApiEndpoints():
 
 
 
-    async def passwordlogin(self, minimum_privilege_level: str, password: str) -> PasswordLoginResponse:
+    async def password_login(self, minimum_privilege_level: str, password: str) -> PasswordLoginResponse:
         response = await self._post(
             "PasswordLogin",
             {
