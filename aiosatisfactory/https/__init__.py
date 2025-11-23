@@ -19,11 +19,13 @@ class HttpsAPI:
         self._api = ApiEndpoints(session, self._url, self._headers, self_signed_certificate)
     
     @property
-    def api_token(self, new_token: str = "") -> str:
-        if new_token:
-            self._api_token = new_token
-            self._headers["Authorization"] = f"Bearer {self._api_token}"
+    def api_token(self) -> str:
         return self._api_token
+    
+    @api_token.setter
+    def api_token(self, new_token: str):    
+        self._api_token = new_token
+        self._headers["Authorization"] = f"Bearer {self._api_token}"
 
     @property
     def api(self) -> ApiEndpoints:
