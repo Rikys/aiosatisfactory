@@ -18,7 +18,6 @@ async def main():
     query = await server.lightweight.query(time.time_ns())
     print(query.response.SubStates)
 
-
 asyncio.run(main())
 ```
 
@@ -33,12 +32,33 @@ from aiosatisfactory import SatisfactoryServer
 from aiosatisfactory.https.models import ErrorResponse
 
 async def main():
-
     async with aiohttp.ClientSession() as session:
         client = SatisfactoryServer("server.ip", session=session)
         try:
             response = await client.https.api.health_check()
             print(response.health)
+        except ErrorResponse as e:
+            print(f"Error: {e.error_code, e.error_message, e.error_details}")
+
+asyncio.run(main())
+```
+
+## Mappings
+The Https API provides the value of *active_schematic* and *game_phase* as some internal strings, this class provides translations to the proper display names
+
+### Usage:
+```python
+import asyncio, aiohttp
+from aiosatisfactory import SatisfactoryServer
+from aiosatisfactory.https.models import ErrorResponse
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        client = SatisfactoryServer("server.ip", session=session, api_token="your_api_token")
+        try:
+            response = await client.https.api.query_server_state()
+            print(client.mappings.game_phase(response.game_phase))
+            print(client.mappings.schematic(response.active_schematic))
         except ErrorResponse as e:
             print(f"Error: {e.error_code, e.error_message, e.error_details}")
 

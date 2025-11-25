@@ -1,6 +1,7 @@
 import aiohttp
 from .lightweight import LightweightAPI
 from .https import HttpsAPI
+from .mappings import Mappings
 
 
 class SatisfactoryServer:
@@ -10,6 +11,7 @@ class SatisfactoryServer:
             self._https = None
         else:
             self._https = HttpsAPI(self_signed_certificate, host, port, session, api_token)
+        self._mappings = Mappings()
 
     @property
     def lightweight(self) -> LightweightAPI:
@@ -19,3 +21,6 @@ class SatisfactoryServer:
     def https(self) -> HttpsAPI | None:
         return self._https
 
+    @property
+    def mappings(self) -> Mappings:
+        return self._mappings
