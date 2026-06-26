@@ -41,7 +41,7 @@ class ApiEndpoints():
         )
 
     def _raise_error(self, response: aiohttp.ClientResponse, data: dict[str, str]) -> None:
-        if response.status >= 400:
+        if response.status >= 400 or "errorCode" in data: #Note: or "errorCode" is needed because passwordless_login on a server with a player passwords returns an error but the status code is still 200
             raise ErrorResponse(data["errorCode"], data.get("errorMessage"), data.get("errorData"))
 
 
