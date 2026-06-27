@@ -1,6 +1,6 @@
 class Mappings:
 
-    _server_states = list[str] = ["Offline", "Idle", "Loading", "Playing"]
+    _server_states: list[str] = ["Offline", "Idle", "Loading", "Playing"]
     
     _game_phases: list[str] = ["Distribution Platform", "Construction Dock", "Main Body", "Propulsion", "Assembly"]
 
