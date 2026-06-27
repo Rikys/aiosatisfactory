@@ -1,5 +1,7 @@
 class Mappings:
 
+    _server_states = list[str] = ["Offline", "Idle", "Loading", "Playing"]
+    
     _game_phases: list[str] = ["Distribution Platform", "Construction Dock", "Main Body", "Propulsion", "Assembly"]
 
     _schematics: list[list[str]] = [
@@ -13,6 +15,9 @@ class Mappings:
         ["Nuclear Power", "Advanced Aluminum Production", "Hoverpack", "Leading-Edge Production", "Particle Enrichment"],
         ["Matter Conversion", "Quantum Encoding", "FICSIT Blueprints Mk.3", "Spatial Energy Regulation", "Peak Efficiency"]
     ]
+
+    def server_state(self, state: int) -> str:
+        return self._server_states[state]
 
     def game_phase(self, phase: str) -> str:
         return self._game_phases[int(phase[-2]) - 1]
