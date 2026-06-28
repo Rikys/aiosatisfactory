@@ -23,4 +23,6 @@ class Mappings:
         return self._game_phases[int(phase[-2]) - 1]
 
     def schematic(self, schematic: str) -> str:
+        if schematic == "None":
+            return "None"
         return self._schematics[int(schematic[-6]) - 1][int(schematic[-4]) - 1]
